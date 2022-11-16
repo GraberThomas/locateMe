@@ -1,18 +1,15 @@
 import './App.css'
-import React, { useState, useRef, useEffect, DOMElement, JSXElementConstructor, CSSProperties } from 'react';
+import React, { useState, useEffect } from 'react';
 import Map, { Marker, NavigationControl } from 'react-map-gl'
 import { FaMapMarkerAlt } from "react-icons/fa"
 import { MarkerType } from './types/types';
 import Contacts_contenair from './components/Contacts_contenair';
-import Popup from 'reactjs-popup';
+import PopUpInfo from './components/PopUpInfo';
 
-const popUpStyle:CSSProperties = {
-  padding: '1000px !important'
-}
 
 function App() {
   const [markersData, setMarkersData]: [MarkerType[], Function] = useState([]);
-  const [visible, setVisible] = useState(false);
+  const [popUpInfoIsvisible, setpopUpInfoIsvisible] = useState(false);
   const [infoPopUp, setInfoPopup]: [string, Function] = useState("");
 
   useEffect(() => {
@@ -21,52 +18,23 @@ function App() {
         setMarkersData(data.data)
       });
     })
-    // console.log(markersData);
   }, [])
 
   const addMarkers = () => {
     return markersData.map((value: MarkerType) => {
       return (<Marker longitude={value.longitude} latitude={value.lattitude} anchor="bottom">
-        <FaMapMarkerAlt className='cursor-pointer' size={"2em"} onClick={() => openPopUp(value.name)} />
+        <FaMapMarkerAlt className='cursor-pointer' size={"2em"} onClick={(e:React.MouseEvent) => {e.stopPropagation() ;openPopUpInfo(value.name)}} />
       </Marker>)
     })
   }
 
-  const openPopUp = (name: string) => {
-    setVisible(true);
+  const openPopUpInfo = (name: string) => {
+    setpopUpInfoIsvisible(true);
     setInfoPopup(name);
   }
 
   const closePopUpInfo = () => {
-    setVisible(false);
-  }
-
-  const getInfoPopUp = () => {
-    let markData: MarkerType | null = null;
-    for (const data of markersData) {
-      if (data.name === infoPopUp) {
-        console.log("found")
-        markData = data;
-        break;
-      }
-    }
-    if (markData !== null) {
-      return (
-        <div className=' text-button '>
-            <h3 className='block text-center font-bold text-2xl bg-card_bg rounded-lg mb-6 p-3'>{markData['name']}</h3>
-
-          <p><span className='font-bold'>Description : </span>{markData['description']}</p>
-          <p><span className='font-bold'>Type : </span>{markData['type']}</p>
-          <p><span className='font-bold'>Coordonnées : </span>{'{'+markData['longitude']+','+ markData['lattitude']+'}'}</p>
-        </div>
-      )
-    } else {
-      return (
-        <div>
-          <p>ERROR</p>
-        </div>
-      )
-    }
+    setpopUpInfoIsvisible(false);
   }
 
   return (
@@ -80,19 +48,13 @@ function App() {
         }}
         style={{ width: '70vw', height: '100vh' }}
         mapStyle="mapbox://styles/mapbox/streets-v11"
+        onClick={(e:mapboxgl.MapMouseEvent) => console.log(e)}
       >
         {addMarkers()}
         <NavigationControl />
       </Map>
-      <Contacts_contenair openPopUp={openPopUp} markersData={markersData} />
-      {/* <Popup visible={visible} onClose={() => setVisible(false)} style={popUpStyle}>
-        {getInfoPopUp()}
-      </Popup> */}
-      <Popup open={visible} closeOnDocumentClick onClose={closePopUpInfo}>
-        <div className='min-w-[200px] rounded-xl bg-[#f1f1f1] p-6 transition-all' >
-          {getInfoPopUp()}
-        </div>
-      </Popup>
+      <Contacts_contenair openPopUp={openPopUpInfo} markersData={markersData} />
+      <PopUpInfo visible={popUpInfoIsvisible} marksData={markersData} infoPopUp={infoPopUp} closePopUp={closePopUpInfo}/>
     </div >
   )
 }
