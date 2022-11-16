@@ -1,0 +1,23 @@
+[
+    {
+        "name": "Le kraft",
+        "description": "Un bar plutôt cher",
+        "type": "entreprise",
+        "longitude": 6.024489718361363,
+        "lattitude": 47.237937080583897
+    },
+    {
+        "name": "Moi",
+        "description": "Mon adresse personnelle",
+        "type": "particulier",
+        "longitude": 5.998612306689477,
+        "lattitude": 47.24530471297956
+    },
+    {
+        "name": "Université",
+        "description": "The best of the promo",
+        "type": "collectivite",
+        "longitude": 5.987844058331042,
+        "lattitude": 47.244928068199904
+    }
+]
