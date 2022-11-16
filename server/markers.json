@@ -1,5 +1,6 @@
 [
     {
+        "id": 0,
         "name": "Le kraft",
         "description": "Un bar plutôt cher",
         "type": "entreprise",
@@ -7,6 +8,7 @@
         "lattitude": 47.237937080583897
     },
     {
+        "id": 1,
         "name": "Moi",
         "description": "Mon adresse personnelle",
         "type": "particulier",
@@ -14,6 +16,7 @@
         "lattitude": 47.24530471297956
     },
     {
+        "id": 2,
         "name": "Université",
         "description": "The best of the promo",
         "type": "collectivite",

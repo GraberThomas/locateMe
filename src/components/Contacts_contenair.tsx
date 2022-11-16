@@ -20,7 +20,7 @@ const Contacts_contenair = ({ markersData, openPopUp }: PropsContacts_contenair)
             </div>
             <div className='flex flex-col gap-4 items-center'>
                 {markersData.map((value:MarkerType) => {
-                    return (<Contacts name={value.name} type={value.type} openPopUp={openPopUp}/>)
+                    return (<Contacts key={value.id} name={value.name} type={value.type} openPopUp={openPopUp}/>)
                 })}
             </div>
             

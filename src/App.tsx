@@ -22,7 +22,7 @@ function App() {
 
   const addMarkers = () => {
     return markersData.map((value: MarkerType) => {
-      return (<Marker longitude={value.longitude} latitude={value.lattitude} anchor="bottom">
+      return (<Marker key={value.id} longitude={value.longitude} latitude={value.lattitude} anchor="bottom">
         <FaMapMarkerAlt className='cursor-pointer' size={"2em"} onClick={(e:React.MouseEvent) => {e.stopPropagation() ;openPopUpInfo(value.name)}} />
       </Marker>)
     })
@@ -48,7 +48,7 @@ function App() {
         }}
         style={{ width: '70vw', height: '100vh' }}
         mapStyle="mapbox://styles/mapbox/streets-v11"
-        onClick={(e:mapboxgl.MapMouseEvent) => console.log(e)}
+        onClick={(e:mapboxgl.MapMouseEvent) => console.log(e.lngLat)}
       >
         {addMarkers()}
         <NavigationControl />
