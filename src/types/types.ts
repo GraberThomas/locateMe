@@ -7,3 +7,8 @@ export type MarkerType = {
     lattitude: number
 }
 
+export type CoordinateObject = {
+    lng:number,
+    lat:number
+}
+

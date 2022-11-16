@@ -8,7 +8,9 @@ import PopUpInfo from './PopUpInfo';
 type contactsProp = {
     name: string,
     type: string,
-    openPopUp: Function
+    id: number,
+    openPopUp: Function,
+    removeContact: Function
 }
 
 const getLogo = (type: string) => {
@@ -21,19 +23,19 @@ const getLogo = (type: string) => {
 
 
 
-const Contacts = ({ name, type, openPopUp}: contactsProp) => {
+const Contacts = ({ name, type, openPopUp, removeContact, id }: contactsProp) => {
     const [isPopUpInfoOpen, setPopUpInfoOpen] = useState(false);
     // const popUp: React.MutableRefObject<any> | null = useRef(null);
 
 
     return (
-        <div onClick={() => openPopUp(name)} className={`w-[80%] flex h-10 bg-card_bg rounded-lg items-center justify-around cursor-pointer`}>
+        <div onClick={() => openPopUp(name)} className={`w-[80%] flex shrink-0 h-9 bg-card_bg rounded-lg items-center justify-around cursor-pointer`}>
             {getLogo(type)}
             <h2 className='block grow ml-2'>{name}</h2>
-            <ImCross className='mr-2' />
-            {/* <div onClick={() => togglePopUpInfo()} ref={popUp} className={`popup fixed top-0 left-0 flex items-center justify-center bg-opacity-70 bg-[#f1f1f1] h-full w-full z-10`}>
-                <PopUpInfo />
-            </div> */}
+            <ImCross className='mr-2' onClick={(e: React.MouseEvent) => {
+                e.stopPropagation();
+                removeContact(id)
+            }} />
         </div>
     );
 };
